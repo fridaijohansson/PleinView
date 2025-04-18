@@ -266,6 +266,13 @@ export default function UploadScreen() {
       Alert.alert("Missing Location", "Please select a location on the map.");
       return false;
     }
+
+    const now = new Date();
+    console.log(now, selectedDateTime)
+    if (selectedDateTime > now) {
+      Alert.alert("Invalid Date", "Please choose a date & time in the past.");
+      return false;
+    }
     
     return true;
   };
