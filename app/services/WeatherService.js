@@ -4,7 +4,6 @@ const API_KEY = process.env.EXPO_PUBLIC_WEATHER_API_KEY;
 const BASE_URL = 'https://api.weatherapi.com/v1';
 
 export const fetchWeather = async (lat, lon) => {
-  
   try {
     const response = await axios.get(`${BASE_URL}/forecast.json`, {
       params: {

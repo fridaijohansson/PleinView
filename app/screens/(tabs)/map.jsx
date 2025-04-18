@@ -14,7 +14,7 @@ import Colors from '../../constants/theme';
 import ForecastCard from '../../components/ForecastCard';
 
 export default function MapScreen() {
-  const { location, error } = useLocation();
+  const { location } = useLocation();
   const { savedLocations, getAllUploads, clearAllData, uploads} = useStorage();
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedUpload, setSelectedUpload] = useState(null);
@@ -77,7 +77,6 @@ export default function MapScreen() {
   };
 
 
-  if (error) return <View style={styles.error}><Text>{error}</Text></View>;
   if (!location) return <ActivityIndicator size="large" color="#ffffff" style={styles.loading} />;
 
   return (

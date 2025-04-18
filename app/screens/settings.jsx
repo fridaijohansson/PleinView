@@ -68,7 +68,6 @@ const SettingsScreen = () => {
       Alert.alert('Error', 'Please select a location on the map first.');
       return;
     }
-    
     const success = await setCustomLocation(markerCoordinates);
     
     if (success) {
@@ -108,11 +107,8 @@ const SettingsScreen = () => {
           </Text>
           
           {permissionStatus !== 'granted' && (
-            <TouchableOpacity 
-              style={styles.button} 
-              onPress={handlePermissionRequest}
-            >
-              <Text style={styles.buttonText}>Request Location Permission</Text>
+            <TouchableOpacity style={styles.button} onPress={handlePermissionRequest}>
+              <Text style={styles.buttonText}>Enable Location Access</Text>
             </TouchableOpacity>
           )}
         </View>
@@ -178,17 +174,18 @@ const SettingsScreen = () => {
           </TouchableOpacity>
 
           <TouchableOpacity 
-            style={[styles.button]} 
-            onPress={getCurrentLocation}
-            disabled={isLoading}
-          >
+            onPress={getCurrentLocation} 
+            style={[styles.button, permissionStatus !== 'granted' && { backgroundColor: '#ccc' }]} 
+            disabled={isLoading || permissionStatus !== 'granted'}>
             {isLoading ? (
               <View style={styles.loadingContainer}>
                 <ActivityIndicator color="white" size="small" />
                 <Text style={styles.buttonText}>Getting Location...</Text>
               </View>
             ) : (
-              <Text style={styles.buttonText}>Get Current Location</Text>
+              <Text style={styles.buttonText}>
+                {permissionStatus !== 'granted' ? 'Permission Required' : 'Get Current Location'}
+              </Text>
             )}
           </TouchableOpacity>
         </View>

@@ -4,7 +4,14 @@ import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const customLocationKey = "CUSTOM_LOCATION";
+
 const LocationContext = createContext(null);
+
+export const useLocation = () => {
+  const context = useContext(LocationContext);
+  if (!context) throw new Error('useLocation must be used within a LocationProvider');
+  return context;
+};
 
 //London
 const DEFAULT_LOCATION = {
@@ -16,8 +23,10 @@ const DEFAULT_LOCATION = {
 
 export const LocationProvider = ({ children }) => {
   const [location, setLocation] = useState(DEFAULT_LOCATION);
-  const [isLoading, setIsLoading] = useState(true);
   const [permissionStatus, setPermissionStatus] = useState('unknown');
+
+  const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
     (async () => {
@@ -32,7 +41,7 @@ export const LocationProvider = ({ children }) => {
             },
           });
         } else {
-          await requestLocationPermission();
+          await getCurrentLocation(); 
         }
       } catch (err) {
         console.warn('Error during init:', err);
@@ -41,20 +50,46 @@ export const LocationProvider = ({ children }) => {
       }
     })();
   }, []);
+  
+  const requestLocationPermission = async () => {
+    try {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      setPermissionStatus(status);
+  
+      //status = 'denied'
 
+      if (status !== 'granted') {
+        Alert.alert(
+          'Limited Functionality',
+          'Some features require location permission. Default location will be used instead.',
+          [{ text: 'OK' }]
+        );
+      }
+  
+      return status;
+    } catch (err) {
+      console.warn('Error requesting permission:', err);
+      return 'error';
+    }
+  };
+  
   const getCurrentLocation = async () => {
     setIsLoading(true);
     try {
-      const status = await requestLocationPermission();
-      console.log("getting your location ",status);
+      const status = permissionStatus === 'unknown'
+        ? await requestLocationPermission()
+        : permissionStatus;
+
       if (status === 'granted') {
         const currentLocation = await Location.getCurrentPositionAsync({
           accuracy: Location.Accuracy.Balanced,
         });
+  
         setLocation(currentLocation);
         await AsyncStorage.removeItem(customLocationKey);
         return true;
       }
+  
       return false;
     } catch (err) {
       console.warn('Error getting current location:', err);
@@ -64,47 +99,12 @@ export const LocationProvider = ({ children }) => {
     }
   };
 
-
-  const requestLocationPermission = async () => {
-    try {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      setPermissionStatus(status);
-      
-      if (status === 'granted') {
-        try {
-          const currentLocation = await Location.getCurrentPositionAsync({
-            accuracy: Location.Accuracy.Balanced,
-          });
-          setLocation(currentLocation);
-        } catch (err) {
-          console.warn('Error getting location after permission granted:', err);
-        }
-      } else {
-        Alert.alert(
-          'Limited Functionality',
-          'Some features require location permission. Default location will be used instead.',
-          [{ text: 'OK' }]
-        );
-      }
-      
-      return status;
-    } catch (err) {
-      console.warn('Error requesting permission:', err);
-      return 'error';
-    }
-  };
-
   const setCustomLocation = async (coords) => {
     if (!coords) return false;
-    
     try {
       const newLocation = {
-        coords: {
-          latitude: coords.latitude,
-          longitude: coords.longitude
-        },
+        coords: {latitude: coords.latitude,longitude: coords.longitude}
       };
-      
       setLocation(newLocation);
       await AsyncStorage.setItem(customLocationKey, JSON.stringify(coords));
       return true;
@@ -120,7 +120,8 @@ export const LocationProvider = ({ children }) => {
  
 
   return (
-    <LocationContext.Provider value={{ 
+    <LocationContext.Provider 
+    value={{ 
       location, 
       isLoading, 
       permissionStatus,
@@ -135,10 +136,6 @@ export const LocationProvider = ({ children }) => {
   );
 };
 
-export const useLocation = () => {
-  const context = useContext(LocationContext);
-  if (!context) throw new Error('useLocation must be used within a LocationProvider');
-  return context;
-};
+
 
 export default LocationProvider;

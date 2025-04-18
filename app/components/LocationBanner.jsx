@@ -20,7 +20,6 @@ const LocationBanner = () => {
             latitude: location.coords.latitude,
             longitude: location.coords.longitude,
           });
-
           if (addressArray.length > 0) {
             const { city, region, country, street, district, subregion } = addressArray[0];
             

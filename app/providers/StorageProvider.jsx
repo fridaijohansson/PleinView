@@ -204,7 +204,7 @@ useEffect(() => {
     isLoading,
     isInitialised,
     
-    // Location functions
+    // Saved Weather Location functions
     saveLocation,
     getSavedLocations,
     removeLocation,
