@@ -20,8 +20,8 @@ has 3 main screens (inside the (tab) folder):
 
 - Shows the user's current location forecast (up to 3 days). 
 - Allows users to search and save forecasts for specific locations. Additional screens: 
-- `settings.jsx` – manage permissions and default location. - `upload.jsx` 
-– handles uploading artwork and reference photos. 
+- `settings.jsx` – manage permissions and default location. 
+- `upload.jsx` – handles uploading artwork and reference photos. 
 
 --- 
 
@@ -43,10 +43,11 @@ has 3 main screens (inside the (tab) folder):
 
 ### Prerequisites 
 
-- [Git](https://git-scm.com/downloads) 
-- [Node.js & npm](https://nodejs.org/en/download/) 
-- [Expo Go](https://expo.dev/go) on your mobile device
-- A code editor like [Visual Studio Code](https://code.visualstudio.com/) 
+- Download [Git](https://git-scm.com/downloads) 
+- Downlaod [Node.js & npm](https://nodejs.org/en/download/) 
+- Get [Expo Go](https://expo.dev/go) on your mobile device
+- Have a code editor like [Visual Studio Code](https://code.visualstudio.com/) 
+- Get a free Weather API key from WeatherAPI.com 
  
 ---
 
@@ -56,30 +57,38 @@ has 3 main screens (inside the (tab) folder):
 
 [Git Repo](https://github.com/fridaijohansson/PleinView) 
 
-Run this command in the terminal: git clone https://github.com/fridaijohansson/PleinView.git 
+Run this command in the terminal: 
+`git clone https://github.com/fridaijohansson/PleinView.git` 
 
 3. **Navigate into the cloned repo** 
 
-- cd PleinView 
-- code . 
+Open project folder in terminal:
+`cd PleinView` 
+
+Open the folder code in another window:
+`code . `
 
 4. **Install dependencies** 
 
-Install all the project's required dependencies mentioned in app.json When successfully installed, run this command: 
-npm install 5. 
+Install all the project's required dependencies mentioned in app.json using this command: 
+`npm install`  
 
-5. **Start the development server** 
+5. **Add the Weather API key to .env file**
+
+Create a .env file and add the Weather API key using this variable name:
+`EXPO_PUBLIC_WEATHER_API_KEY = ‘ [API KEY] ’`
+
+6. **Start the development server** 
 
 Through the terminal using NPX: 
+`npx expo start` 
 
-- npx expo start 
-
-6. **Open PleinView using Expo Go** 
+7. **Open PleinView using Expo Go** 
 
 - Check that your phone and computer are on the same Wi-Fi 
 - Scan the QR code in the terminal using Expo Go 
 
-App will launch on your device 
+PleinView will now launch on your device 
 
 ---
 
