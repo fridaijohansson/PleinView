@@ -12,13 +12,13 @@ has 3 main screens (inside the (tab) folder):
 - Displays markers for saved painting locations. 
 - Shows an overview of uploaded artwork. 2. 
 
-**Gallery view** (`gallery.jsx`) 
+2. **Gallery view** (`gallery.jsx`) 
 
 - Collects all user uploads, including artwork and real-world references. 
 - Displays metadata such as notes, date/time, and geolocation. 
 - Includes full CRUD functionality. 
 
-2. **Weather view** (`weather.jsx`) 
+3. **Weather view** (`weather.jsx`) 
 
 - Shows the user's current location forecast (up to 3 days). 
 - Allows users to search and save forecasts for specific locations. Additional screens: 
