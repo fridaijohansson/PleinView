@@ -1,6 +1,8 @@
 # PleinView 
 
-A React Native app that helps outdoor painters collect painting spots, compare their results to real-world references, and plan ahead by tracking the weather. ## Screens 
+A React Native app that helps outdoor painters collect painting spots, compare their results to real-world references, and plan ahead by tracking the weather. 
+
+## Screens 
 
 **PleinView** 
 
